@@ -19,6 +19,10 @@
 - **Material To Json: `mat2json(file_path)`**
 - **Convert Options:  `convert_options(file_path,output_file_path)`**
 - **Revert Options:   `revert_options(file_path,output_file_path`**
+- **Convert Achievements: `convert_achievements(file_path,output_file_path`**
+- **Revert Achievements: `revert_achievments(file_path,output_file_path`**
+- **Extract Lines: `extract_lines(image_path`**
+- **Extract Head: `extract_head(image_path)`**
 
 ## Credit(s):
 - **[@Wolfyxon](https://github.com/Wolfyxon) - Few of the Functions in the Code.**
