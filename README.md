@@ -1,5 +1,5 @@
 # mc3dslib
-- **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, as-well-as Game and romfs Files.**
+- **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
 
 
 
