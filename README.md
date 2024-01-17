@@ -22,3 +22,8 @@ A python Library for Minecraft 3DS, allowing for easy Modification of the Game a
 - **Open Blang File:  `modify_file = BlangFile().open(input_path)`**
 - **Blang To Json:    `modify_file.Blang2Json(output_path)`**
 - **Json To Blang:    `modify_file.Json2Blang(output_path)`**
+
+## Credit(s):
+- [@Wolfyxon](https://github.com/Wolfyxon)
+- [@STBUniverse](https://github.com/STBrian)
+- [@Cracko298](https://github.com/Cracko298)
