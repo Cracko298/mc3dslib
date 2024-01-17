@@ -313,6 +313,7 @@ def reverse_three_bytes(data):
     return reversed_three_bytes
 
 def extract_lines(image_path):
+    # Cracko298
     if ".3dst" not in image_path:
         print('Error: Provided File is not a Valid .3dst Image.\n')
         exit(1)
@@ -352,6 +353,7 @@ def extract_lines(image_path):
                 file.seek(0x04 * i)
 
 def extract_head(image_path, output_path):
+    # Cracko298
     offset = 0x20
     with open(image_path,'rb') as f, open(output_path, 'wb+') as outpf:
         header = f.read(offset)
