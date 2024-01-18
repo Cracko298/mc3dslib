@@ -26,6 +26,24 @@
 - **Extract Lines: `extract_lines(image_path`**
 - **Extract Head: `extract_head(image_path)`**
 
+## Importing the Module(s):
+### Defualt Importing:
+```py
+import mc3dslib
+```
+### Blang Only Importing:
+```py
+from mc3dslib import BlangFile
+```
+### Import Everything:
+```py
+from mc3dslib import *
+```
+### Importing as 'mc3ds'
+```
+import mc3dslib as mc3ds
+```
+
 ## Blang Conversion(s):
 ### Initializing the File:
 ```py
