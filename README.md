@@ -40,7 +40,7 @@ from mc3dslib import BlangFile
 from mc3dslib import *
 ```
 ### Importing as 'mc3ds'
-```
+```py
 import mc3dslib as mc3ds
 ```
 
