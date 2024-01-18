@@ -31,7 +31,7 @@
 ```py
 import mc3dslib
 
-file = mc3dslib.BlangFile().open("en_GB.json") # Example File
+file = mc3dslib.BlangFile().open("en_GB.json") # Initialzation of Example File
 ```
 
 ### JSON TO BLANG
