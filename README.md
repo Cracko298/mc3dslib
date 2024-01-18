@@ -27,20 +27,27 @@
 - **Extract Head: `extract_head(image_path)`**
 
 ## Blang Conversion(s):
+### Initializing the File:
+```py
+import mc3dslib
+
+file = mc3dslib.BlangFile().open("en_GB.json") # Example File
+```
+
 ### JSON TO BLANG
 ```py
 import mc3dslib
 
-file = mc3dslib.BlangFile().open("en_GB.json") # Example of Translation JSON to convert to Blang
+## YOU NEED TO INITIALIZE THE FILE YOU WANT TO CONVERT FIRST!
 
 output_path = ".\\" ## Any Valid Path can go here
 mc3dslib.BlangFile().fromJson(output_path)
 ```
 ### BLANG TO JSON
-```
+```py
 import mc3dslib
 
-file = mc3dslib.BlangFile().open("de_DE.blang") # Example of Translation Blang File to convert to JSON
+## YOU NEED TO INITIALIZE THE FILE YOU WANT TO CONVERT FIRST!
 
 output_path = ".\\" # Any Valid Path can go here
 mc3dslib.BlangFile().toJson(output_path)
