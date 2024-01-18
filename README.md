@@ -1,6 +1,8 @@
 # mc3dslib
 - **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
 
+## Note:
+- **Documentation is Extremely barebones currently. A more in-depth documentation will be added soon.**
 
 
 
@@ -19,10 +21,17 @@
 - **Material To Json: `mat2json(file_path)`**
 - **Convert Options:  `convert_options(file_path,output_file_path)`**
 - **Revert Options:   `revert_options(file_path,output_file_path`**
-- **Convert Achievements: `convert_achievements(file_path,output_file_path`**
-- **Revert Achievements: `revert_achievments(file_path,output_file_path`**
+- **Blang To Json: `toJson(blang_file)`**
+- **Json To Blang: `fromJson(json_file)`**
 - **Extract Lines: `extract_lines(image_path`**
 - **Extract Head: `extract_head(image_path)`**
+
+# Panning Additions:
+- **Convert Achievements**
+- **Revert Achievements**
+- **Extract Arms**
+- **Extract Legs**
+- **Extract Body**
 
 ## Credit(s):
 - **[@Wolfyxon](https://github.com/Wolfyxon) - Few of the Functions in the Code.**
