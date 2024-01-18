@@ -80,5 +80,5 @@ mc3dslib.BlangFile().toJson(output_path)
 
 ## Credit(s):
 - **[@Wolfyxon](https://github.com/Wolfyxon) - Few of the Functions in the Code.**
-- **[@STBrian](https://github.com/STBrian] - MC3DS Blang Format Conversion Code.**
+- **[@STBrian](https://github.com/STBrian) - MC3DS Blang Format Conversion Code.**
 - **[@Cracko298](https://github.com/Cracko298) - Developer of Most Functions in the Code.**
