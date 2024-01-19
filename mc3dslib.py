@@ -473,38 +473,11 @@ def reverse_three_bytes(data):
     reversed_three_bytes += data[3:4]
     return reversed_three_bytes
 
-def extract_lines(image_path):
-    if ".3dst" not in image_path:
-        print('Error: Provided File is not a Valid .3dst Image.\n')
-        exit(1)
-
-    with open(image_path, 'rb') as file:
-        header_data = file.read(0x20)
-        out_path = image_path.replace(".3dst", "_firstline.3dst")
-        print("1")
-        file.seek(0x20, 1)
-
-        with open(out_path, 'wb+') as f:
-            f.write(header_data)
-            for _ in range(8):
-                data1 = file.read(0x08)
-                print(data1)
-                file.seek(0x08, 1)
-                data2 = file.read(0x08)
-                file.seek(0x28, 1)
-                data3 = file.read(0x08)
-                file.seek(0x08, 1)
-                data4 = file.read(0x08)
-                file.seek(0xA8, 1)
-                f.write(data1)
-                f.write(data2)
-                f.write(data3)
-                f.write(data4)
-
+def create_r3dst(image_path):
     with open(f"{image_path}_converted.r3dst",'wb+') as f:
-        with open(out_path, 'rb') as file:
+        with open(image_path, 'rb') as file:
             file.seek(0x20, 1)
-            for i in range(0x01, 0x41):
+            for i in range(0x01, 0x4001):
                 data = file.read(0x04)
                 data = reverse_four_bytes(data)
                 data = reverse_three_bytes(data)
@@ -540,6 +513,7 @@ def revert_options(file_path,output_file_path):
             print("Target bytes not found, no modification needed.")
 
 def image_convert(image_path):
+    
     def extract_blocks(img):
         block_size = 0x100
         total_size = 0x4000
@@ -568,21 +542,42 @@ def image_convert(image_path):
                 f.seek(start_offset + 0x50)
                 four = f.read(0x08)
 
-                with open(f'.\\out\\lines\\{output_folder}_out{i}.3dst', 'wb+') as o:
+                with open(f'.\\out\\lines\\{output_folder}_out_{i}.3dst', 'wb+') as o:
                     o.write(one)
                     o.write(two)
                     o.write(three)
                     o.write(four)
 
+    def sort_and_concatenate_binary_files(input_directory, output_directory):
+        files_dict = {}
+
+        for filename in os.listdir(input_directory):
+            if filename.endswith(".3dst"):
+                last_number = int(filename.split('_')[-1].split('.')[0])
+
+                files_dict.setdefault(last_number, []).append(filename)
+
+        os.makedirs(output_directory, exist_ok=True)
+
+        for last_number in sorted(files_dict.keys()):
+            with open(os.path.join(output_directory, f"compiled_lines_{last_number}.3dst"), "wb") as output_file:
+                for filename in sorted(files_dict[last_number]):
+                    input_file_path = os.path.join(input_directory, filename)
+                    with open(input_file_path, "rb") as input_file:
+                        output_file.write(input_file.read())
+
+
     os.makedirs('.\\out', exist_ok=True)
     os.makedirs('.\\out\\lines', exist_ok=True)
+    os.makedirs('.\\out\\compiled_lines', exist_ok=True)
 
     extract_blocks(image_path)
-    extract_lines(0x20, "first")
-    extract_lines(0x28, "second")
-    extract_lines(0x40, "third")
-    extract_lines(0x48, "fourth")
-    extract_lines(0xA0, "fifth")
-    extract_lines(0xA8, "sixth")
-    extract_lines(0xC0, "seventh")
-    extract_lines(0xC8, "eighth")
+    extract_lines(0x20, "1")
+    extract_lines(0x28, "2")
+    extract_lines(0x40, "3")
+    extract_lines(0x48, "4")
+    extract_lines(0xA0, "5")
+    extract_lines(0xA8, "6")
+    extract_lines(0xC0, "7")
+    extract_lines(0xC8, "8")
+    sort_and_concatenate_binary_files('.\\out\\lines','.\\out\\compiled_lines')
