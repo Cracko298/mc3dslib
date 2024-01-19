@@ -23,7 +23,6 @@
 - **Revert Options:   `revert_options(file_path,output_file_path`**
 - **Blang To Json: `toJson(blang_file)`**
 - **Json To Blang: `fromJson(json_file)`**
-- **Extract Lines: `extract_lines(image_path`**
 - **Extract Head: `extract_head(image_path)`**
 - **Extract 3DST Skeleton: `image_convert(image_path)`**
 
