@@ -539,9 +539,6 @@ def revert_options(file_path,output_file_path):
         else:
             print("Target bytes not found, no modification needed.")
 
-
-import os
-
 def image_convert(image_path):
     def extract_blocks(img):
         block_size = 0x100
