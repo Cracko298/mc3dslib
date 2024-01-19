@@ -1,5 +1,7 @@
 # mc3dslib
 - **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
+- **This Library is being Developed by: [@Wolfyxon](https://github.com/Wolfyxon), [@STBrian](https://github.com/STBrian), and [@Cracko298](https://github.com/Cracko298).**
+
 
 ## Note:
 - **Documentation is Extremely barebones currently. A more in-depth documentation will be added soon.**
