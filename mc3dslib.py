@@ -538,3 +538,54 @@ def revert_options(file_path,output_file_path):
             print("Modification successful.")
         else:
             print("Target bytes not found, no modification needed.")
+
+
+import os
+
+def image_convert(image_path):
+    def extract_blocks(img):
+        block_size = 0x100
+        total_size = 0x4000
+        offset = 0x20
+
+        with open(img, 'rb') as f:
+            header = f.read(offset)
+
+            for i in range(1, total_size // block_size + 1):
+                with open(f".\\out\\out_{i}.3dst", 'wb') as o:
+                    o.write(header)
+                    blocks = f.read(block_size)
+                    o.write(blocks)
+
+    def extract_lines(start_offset, output_folder):
+        block_size = 0x100
+        total_size = 0x4000
+        for i in range(1, total_size // block_size + 1):
+            with open(f".\\out\\out_{i}.3dst", "rb+") as f:
+                f.seek(start_offset)
+                one = f.read(0x08)
+                f.seek(start_offset + 0x10)
+                two = f.read(0x08)
+                f.seek(start_offset + 0x40)
+                three = f.read(0x08)
+                f.seek(start_offset + 0x50)
+                four = f.read(0x08)
+
+                with open(f'.\\out\\lines\\{output_folder}_out{i}.3dst', 'wb+') as o:
+                    o.write(one)
+                    o.write(two)
+                    o.write(three)
+                    o.write(four)
+
+    os.makedirs('.\\out', exist_ok=True)
+    os.makedirs('.\\out\\lines', exist_ok=True)
+
+    extract_blocks(image_path)
+    extract_lines(0x20, "first")
+    extract_lines(0x28, "second")
+    extract_lines(0x40, "third")
+    extract_lines(0x48, "fourth")
+    extract_lines(0xA0, "fifth")
+    extract_lines(0xA8, "sixth")
+    extract_lines(0xC0, "seventh")
+    extract_lines(0xC8, "eighth")
