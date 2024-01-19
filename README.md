@@ -25,6 +25,7 @@
 - **Json To Blang: `fromJson(json_file)`**
 - **Extract Head: `extract_head(image_path)`**
 - **Extract 3DST Skeleton: `image_convert(image_path)`**
+- **Create .r3dst: `create_r3dst(image_path)`**
 
 ## Importing the Module(s):
 ### Defualt Importing:
