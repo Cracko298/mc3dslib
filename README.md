@@ -32,15 +32,12 @@
 ```py
 import mc3dslib
 ```
-### Blang Only Importing:
 ```py
 from mc3dslib import BlangFile
 ```
-### Import Everything:
 ```py
 from mc3dslib import *
 ```
-### Importing as 'mc3ds'
 ```py
 import mc3dslib as mc3ds
 ```
