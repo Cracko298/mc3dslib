@@ -28,6 +28,7 @@
 - **Extract Head: `extract_head(image_path)`**
 - **Convert To PNG: `image_convert(image_path)`**
 - **Create .r3dst: `create_r3dst(image_path)`**
+- **Copy Lines: `copy_lines(filename, line_number, mode)`**
 
 ## Importing the Module(s):
 ### Defualt Importing:
