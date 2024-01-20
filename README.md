@@ -1,6 +1,6 @@
 # mc3dslib
 - **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
-- **This Library is being Developed by: [@Wolfyxon](https://github.com/Wolfyxon), [@STBrian](https://github.com/STBrian), and [@Cracko298](https://github.com/Cracko298).**
+- **This Library is being Developed by: [@Wolfyxon](https://github.com/Wolfyxon), [@STBrian](https://github.com/STBrian), [@Cracko298](https://github.com/Cracko298), and [@YT-Toaster](https://github.com/YT-Toaster).**
 
 
 ## Note:
@@ -84,3 +84,4 @@ mc3dslib.BlangFile().toJson(output_path)
 - **[@Wolfyxon](https://github.com/Wolfyxon) - Few of the Functions in the Code.**
 - **[@STBrian](https://github.com/STBrian) - MC3DS Blang Format Conversion Code.**
 - **[@Cracko298](https://github.com/Cracko298) - Developer of Most Functions in the Code.**
+- **[@YT-Toaster](https://github.com/YT-Toaster) - Few of the Functions in the Code.**
