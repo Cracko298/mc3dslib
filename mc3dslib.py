@@ -582,7 +582,8 @@ def image_convert(image_path):
     extract_lines(0xC8, "8")
     sort_and_concatenate_binary_files('.\\out\\lines','.\\out\\compiled_lines')
 
-def copy_lines(filename, line_number-1, mode=1):
+def copy_lines(filename, line_number, mode=1):
+    line_number -= 1
     try:
         with open(filename, 'rb') as file:
             lines = file.readlines()
