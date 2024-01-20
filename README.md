@@ -7,7 +7,8 @@
 - **Documentation is Extremely barebones currently. A more in-depth documentation will be added soon.**
 - **I've made a Documentation on both MC3DS's [Options.txt](https://github.com/Cracko298/MC3DS-Options-Documentation), and [ARGB .3DST](https://github.com/Cracko298/MC-3DST-Documentation), if you want a more "in-depth explantaion of things."**
 
-
+## Read the Wiki:
+- **[mc3dslib](https://github.com/Cracko298/mc3dslib/wiki) Documentation.**
 
 # mc3dslib Function(s):
 
