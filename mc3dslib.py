@@ -581,3 +581,32 @@ def image_convert(image_path):
     extract_lines(0xC0, "7")
     extract_lines(0xC8, "8")
     sort_and_concatenate_binary_files('.\\out\\lines','.\\out\\compiled_lines')
+
+def copy_lines(filename, line_number, mode=1):
+    try:
+        with open(filename, 'rb') as file:
+            lines = file.readlines()
+
+            if 0 <= line_number < len(lines):
+                if mode == 0:
+                    lines_to_copy = lines[line_number:]
+                elif mode == 1:
+                    lines_to_copy = [lines[line_number]]
+                elif mode == 2:
+                    lines_to_copy = [lines[line_number]]
+                elif mode == 3:
+                    line = lines[line_number]
+                    hash_value = hashlib.sha256(line).hexdigest()
+                    return f"SHA256 Hash of Line {line_number + 1}: {hash_value}"
+
+                new_filename = f"{filename}_copied.bin"
+                with open(new_filename, 'wb') as new_file:
+                    for line_to_copy in lines_to_copy:
+                        new_file.write(line_to_copy)
+
+                return f"Text(s) copied to {new_filename}"
+            else:
+                return "Invalid line number"
+
+    except FileNotFoundError:
+        return f"File '{filename}' not found"
