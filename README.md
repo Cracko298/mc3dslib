@@ -58,19 +58,17 @@ file = mc3dslib.BlangFile().open("en_GB.json") # Initialzation of Example File
 ```py
 import mc3dslib
 
-## YOU NEED TO INITIALIZE THE FILE YOU WANT TO CONVERT FIRST!
-
-output_path = ".\\" ## Any Valid Path can go here
-mc3dslib.BlangFile().fromJson(output_path)
+input_file_path = ".\\" ## Any Valid JSON file can go here
+blang_file = mc3dslib.BlangFile().fromJson(input_file_path)
 ```
 ### BLANG TO JSON
 ```py
 import mc3dslib
 
-## YOU NEED TO INITIALIZE THE FILE YOU WANT TO CONVERT FIRST!
+blang_file = mc3dslib.BlangFile().open("en_GB.json")
 
 output_path = ".\\" # Any Valid Path can go here
-mc3dslib.BlangFile().toJson(output_path)
+blang_file.toJson(output_path)
 ```
 
 # Panning Additions:
