@@ -1,12 +1,24 @@
 import os
 import json
+import hashlib
+import shutil
 from pathlib import Path
+
+
+class make_mcworld_struct:
+    # Cracko298
+    def make_dirs(self):
+        os.makedirs(".\\mcworld_files", exist_ok=True)
+        os.makedirs(".\\mcworld_files\\db", exist_ok=True)
+        os.makedirs(".\\mcworld_files\\resource_packs", exist_ok=True)
+        os.makedirs(".\\mcworld_files\\behavior_packs", exist_ok=True)
 
 class MC3DSBlangException(Exception):
     def __init__(self, message):
         super().__init__(message)
 
 class BlangFile:
+    # STBUniverse (STBrian)
     def __init__(self):
         return
     
@@ -513,7 +525,7 @@ def revert_options(file_path,output_file_path):
             print("Target bytes not found, no modification needed.")
 
 def image_convert(image_path):
-    
+    # Cracko298
     def extract_blocks(img):
         block_size = 0x100
         total_size = 0x4000
@@ -583,6 +595,7 @@ def image_convert(image_path):
     sort_and_concatenate_binary_files('.\\out\\lines','.\\out\\compiled_lines')
 
 def copy_lines(filename, line_number, mode=1):
+    # YT-Toaster
     line_number -= 1
     try:
         with open(filename, 'rb') as file:
@@ -611,3 +624,85 @@ def copy_lines(filename, line_number, mode=1):
 
     except FileNotFoundError:
         return f"File '{filename}' not found"
+
+def console2bedrock_cdb(folder_path, truncate_offset=0x84):
+    make_mcworld_struct.make_dirs(make_mcworld_struct)
+
+    file_prefix = "slt"
+    output_file_name = "000001.ldb"
+
+    def extract_number(file_name):
+        try:
+            return int(file_name[len(file_prefix):file_name.index(".cdb")])
+        except ValueError:
+            return 0
+
+    files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+
+    filtered_files = [(file, extract_number(file)) for file in files if file.startswith(file_prefix)]
+
+    if filtered_files:
+        max_file = max(filtered_files, key=lambda x: x[1])
+        max_file_name, max_file_number = max_file
+
+        with open(os.path.join(folder_path, max_file_name), 'rb+') as file:
+            file_content = file.read()
+            file.seek(truncate_offset)
+            truncated_content = file.read()
+
+            with open(os.path.join(".\\mcworld_files\\db", output_file_name), 'wb') as new_file:
+                new_file.write(truncated_content)
+
+        return f"Converted most Recent Slot to: '{output_file_name}'."
+    else:
+        return "No files found with the specified format."
+
+def console2bedrock_vdb(folder_path):
+    make_mcworld_struct.make_dirs(make_mcworld_struct)
+
+    offset=0x8014
+    file_prefix="slt"
+    output_file_name="000002.log"
+
+    if not os.path.exists(folder_path):
+        return f"Error: '{folder_path}' is not a valid path."
+
+    def extract_number(file_name):
+        try:
+            return int(file_name[len(file_prefix):file_name.index(".vdb")])
+        except ValueError:
+            return 0
+
+    vdb_files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f)) and f.startswith(file_prefix)]
+
+    if vdb_files:
+        filtered_files = [(file, extract_number(file)) for file in vdb_files]
+        max_file = max(filtered_files, key=lambda x: x[1])
+        max_file_name, max_file_number = max_file
+
+        with open(os.path.join(folder_path, max_file_name), 'rb') as file:
+            content_at_offset = file.read()
+            file.seek(offset)
+            check_file = file.read(0x01)
+        
+            with open(os.path.join(".\\mcworld_files\\db", output_file_name), 'wb') as new_file:
+                new_file.write(content_at_offset)
+
+        return f"Converted most recent VDB file to: '{output_file_name}'."
+    else:
+        return "No VDB files found with the specified format."
+
+def console2bedrock_meta(level_dat=0, level_dat_old=0, levelname_txt=0, world_icon=None):
+    checksum = 0x00
+
+    if world_icon == None:
+        checksum += 0x7A
+
+    shutil.copy2(level_dat, ".\\mcworld_files")
+    shutil.copy2(level_dat_old, ".\\mcworld_files")
+    shutil.copy2(levelname_txt, ".\\mcworld_files")
+
+    if checksum >= 0x50:
+        pass
+    else:
+        shutil.copy2(world_icon, ".\\mcworld_files")
