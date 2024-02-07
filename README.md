@@ -32,7 +32,8 @@
 - **Copy Lines: `copy_lines(filename, line_number, mode)`**
 - **Convert CDB To LDB: `console2bedrock_cdb(folder_path, optional_offset)`**
 - **Convert VDB To Log: `console2bedrock_vdb(folder_path)`**
-- **Copy Over Information: `console2bedrock_cdb(folder_path, optional_offset)`**
+- **Copy World Information: `console2bedrock_cdb(folder_path, optional_offset)`**
+- **Convert Full World (Test): `convert_save(folder_path, world_icon_path)`**
 
 ## Importing the Module(s):
 ### Defualt Importing:
