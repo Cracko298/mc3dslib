@@ -706,3 +706,30 @@ def console2bedrock_meta(level_dat=0, level_dat_old=0, levelname_txt=0, world_ic
         pass
     else:
         shutil.copy2(world_icon, ".\\mcworld_files")
+
+def convert_save(folder_path, world_icon_path=None):
+    # YT-Toaster
+    make_mcworld_struct.make_dirs(make_mcworld_struct)
+
+    toast0 = os.path.exists(f"{folder_path}\\db\\vdb")
+    toast1 = os.path.exists(f"{folder_path}\\db\\cdb")
+
+    if toast0 == True and toast1 == True:
+        print("Valid Path Recieved.")
+    else:
+        return f"Path Recieved is Not Valid 3DS World Save.\n\nPath Provied: '{folder_path}'."
+    
+    console2bedrock_cdb(f"{folder_path}\\db\\cdb")
+    console2bedrock_vdb(f"{folder_path}\\db\\vdb")
+
+    chk0, chk1, chk2 = (".png", ".jpeg", ".jpg")
+
+    if chk0 in folder_path or chk1 in folder_path or chk2 in folder_path:
+        png_check = True
+    else:
+        png_check = False
+
+    if world_icon_path == None:
+        console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt")
+    elif world_icon_path and png_check == True:
+        console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt", world_icon_path)
