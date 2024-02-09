@@ -1,9 +1,5 @@
-import os
-import json
-import hashlib
-import shutil
+import os, json, hashlib, shutil, zipfile, random
 from pathlib import Path
-
 
 class make_mcworld_struct:
     # Cracko298
@@ -626,6 +622,7 @@ def copy_lines(filename, line_number, mode=1):
         return f"File '{filename}' not found"
 
 def console2bedrock_cdb(folder_path, truncate_offset=0x84):
+    # Cracko298
     make_mcworld_struct.make_dirs(make_mcworld_struct)
 
     file_prefix = "slt"
@@ -658,6 +655,7 @@ def console2bedrock_cdb(folder_path, truncate_offset=0x84):
         return "No files found with the specified format."
 
 def console2bedrock_vdb(folder_path):
+    # Cracko298
     make_mcworld_struct.make_dirs(make_mcworld_struct)
 
     offset=0x8014
@@ -693,6 +691,8 @@ def console2bedrock_vdb(folder_path):
         return "No VDB files found with the specified format."
 
 def console2bedrock_meta(level_dat=0, level_dat_old=0, levelname_txt=0, world_icon=None):
+    # Cracko298
+    make_mcworld_struct.make_dirs(make_mcworld_struct)
     checksum = 0x00
 
     if world_icon == None:
@@ -707,8 +707,38 @@ def console2bedrock_meta(level_dat=0, level_dat_old=0, levelname_txt=0, world_ic
     else:
         shutil.copy2(world_icon, ".\\mcworld_files")
 
+def convert_lockage(file_path):
+    # Cracko298
+    make_mcworld_struct.make_dirs(make_mcworld_struct)
+    with open(file_path, 'rb+') as f0:
+        lockage_data = f0.read()
+        
+    with open('.\\mcworld_files\\db\\MANIFEST-000001', 'wb+') as f1:
+        f1.write(lockage_data)
+    
+    with open('.\\mcworld_files\\db\\CURRENT', 'w+') as f2:
+        f2.write("MANIFEST-000001")
+    
+    f3 = open(".\\mcworld_files\\db\\LOCK", 'wb+')
+    f4 = open(".\\mcworld_files\\db\\LOG", 'wb+')
+    f3.close()
+    f4.close()
+
+def zip_convert_contents(folder_path):
+    # Cracko298
+    zip_name = os.path.basename(folder_path)
+
+    with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(".\\mcworld_files"):
+            for file in files:
+                zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), ".\\mcworld_files"))
+
+    zip_name = zip_name.replace('.zip','')
+
+    os.rename(zip_name, f"{zip_name}_Converted.mcworld")
+
 def convert_save(folder_path, world_icon_path=None):
-    # YT-Toaster
+    # YT-Toaster & Cracko298
     make_mcworld_struct.make_dirs(make_mcworld_struct)
 
     toast0 = os.path.exists(f"{folder_path}\\db\\vdb")
@@ -733,3 +763,7 @@ def convert_save(folder_path, world_icon_path=None):
         console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt")
     elif world_icon_path and png_check == True:
         console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt", world_icon_path)
+
+    convert_lockage(f"{folder_path}\\db\\vdb\\newindex.vdb")
+
+    zip_convert_contents(folder_path)
