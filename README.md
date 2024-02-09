@@ -89,3 +89,7 @@ blang_file.toJson(output_path)
 - **[@STBrian](https://github.com/STBrian) - MC3DS Blang Format Conversion Code.**
 - **[@Cracko298](https://github.com/Cracko298) - Developer of Most Functions in the Code.**
 - **[@YT-Toaster](https://github.com/YT-Toaster) - Few of the Functions in the Code.**
+- **[olverimcDISC]() - His map was used as a test to conversion methods from 3DS to Bedrock**
+```
+Oliver's Map (LoCity - https://www.minecraft3ds.net/maps/locity)
+```
