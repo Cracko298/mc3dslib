@@ -33,7 +33,9 @@
 - **Convert CDB To LDB: `console2bedrock_cdb(folder_path, optional_offset)`**
 - **Convert VDB To Log: `console2bedrock_vdb(folder_path)`**
 - **Copy World Information: `console2bedrock_cdb(folder_path, optional_offset)`**
-- **Convert Full World (Test): `convert_save(folder_path, world_icon_path)`**
+- **Convert Full World: `convert_save(folder_path, world_icon_path)`**
+- **Create Converted World Lockage: `convert_lockage(file_path)`**
+- **Convert Stuff into .mcworld: `zip_convert_contents`**
 
 ## Importing the Module(s):
 ### Defualt Importing:
