@@ -1,6 +1,6 @@
 # mc3dslib
 - **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
-- **An online installer/Updater was just released alongside version <ins>v0.1.0-beta</ins>🎉. Download The Updater/Installer [Here](https://github.com/Cracko298/mc3dslib/releases/download/v0.1.0-beta/mc3dslib_updater.exe).**
+- **An online installer/Updater was just released alongside version <ins>v0.1.0-beta</ins>🎉.**
 
 ## Note:
 - **Documentation is Extremely barebones currently. A more in-depth documentation will be added soon.**
@@ -8,6 +8,10 @@
 
 ## Read the Wiki:
 - **[mc3dslib](https://github.com/Cracko298/mc3dslib/wiki) Documentation.**
+
+## Download(s):
+- **Download The Updater/Installer [Here](https://github.com/Cracko298/mc3dslib/releases/download/v0.1.0-beta/mc3dslib_updater.exe).**
+
 
 # mc3dslib Function(s):
 
