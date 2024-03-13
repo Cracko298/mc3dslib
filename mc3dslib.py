@@ -1,5 +1,6 @@
-import os, json, hashlib, shutil, zipfile, random
+import os, json, hashlib, shutil, zipfile, struct
 from pathlib import Path
+from PIL import Image
 
 class make_mcworld_struct:
     # Cracko298
@@ -768,5 +769,96 @@ def convert_save(folder_path, world_icon_path=None):
         console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt", world_icon_path)
 
     convert_lockage(f"{folder_path}\\db\\vdb\\newindex.vdb")
-
     zip_convert_contents(folder_path)
+
+def get_png_demesions(png_path=str):
+    if '\\' in png_path:
+        png_path.replace('\\','/')
+
+    with Image.open(png_path) as image:
+        width,height = image.size
+        return width, height
+
+def get_3dst_demensions(etc2_path=str):
+    if '\\' in etc2_path:
+        etc2_path.replace('\\','/')
+        
+    with open(etc2_path,'rb+') as of:
+        of.seek(0x0C)
+        width_b = of.read(0x04)
+        of.seek(0x10)
+        height_b = of.read(0x04)
+    
+        width = int.from_bytes(width_b, byteorder='little')
+        height = int.from_bytes(height_b, byteorder='little')
+        of.close()
+        return width, height
+
+def convert_2_img(etc2_file_path=str,show_flag=False):
+    if '\\' in etc2_file_path:
+        etc2_file_path.replace('\\','/')
+
+    outname = os.path.basename(etc2_file_path)
+    extension = os.path.splitext(etc2_file_path)[1]
+    outname = outname.replace(extension,'.png')
+
+    width, height = get_3dst_demensions(etc2_file_path)
+
+    with open(etc2_file_path, 'rb') as f:
+        f.seek(0x20)
+        etc2_data = f.read()
+
+    image = Image.new('RGBA', (width, height))
+    block_size = 8
+    offset = 0
+    for y in range(0, height, block_size):
+        for x in range(0, width, block_size):
+            for block_y in range(block_size):
+                for block_x in range(block_size):
+                    if offset + 4 <= len(etc2_data):
+                        a, b, g, r = struct.unpack_from('BBBB', etc2_data, offset)
+                        if a == 0:
+                            r,g,b = 0,0,0
+                        image.putpixel((x + block_x, y + block_y), (r, g, b, a))
+                        offset += 4
+
+    if show_flag == True:
+        image.show()
+    
+    image.save(outname)
+    return image
+
+def convert_2_etc2(png_file_path=str):
+    if '\\' in png_file_path:
+        png_file_path.replace('\\','/')
+
+    outname = os.path.basename(png_file_path)
+    extension = os.path.splitext(png_file_path)[1]
+    outname = outname.replace(extension,'.3dst')
+
+    width,height = get_png_demesions(png_file_path)
+    w = width.to_bytes(4, byteorder='little')
+    h = height.to_bytes(4, byteorder='little')
+
+    with Image.open(png_file_path) as image:
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
+        
+        width, height = image.size
+        etc2_data = bytearray()
+        for y in range(0, height, 8):
+            for x in range(0, width, 8):
+                block_data = b''
+                for block_y in range(8):
+                    for block_x in range(8):
+                        pixel = image.getpixel((x + block_x, y + block_y))
+                        r, g, b, a = pixel
+                        block_data += struct.pack('BBBB', a, b, g, r)
+
+                etc2_data += block_data
+
+        with open(outname,'wb+') as f:
+            f.write(b'3DST\x03\x00\x00\x00\x00\x00\x00\x00'),f.write(w),f.write(h),f.write(w),f.write(h),f.write(b'\x01\x00\x00\x00')
+            f.write(etc2_data)
+        
+        return bytes(etc2_data)
