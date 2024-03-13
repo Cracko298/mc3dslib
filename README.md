@@ -40,7 +40,10 @@
 - **Convert Full World: `convert_save(folder_path, world_icon_path)`**
 - **Create Converted World Lockage: `convert_lockage(file_path)`**
 - **Convert Stuff into .mcworld: `zip_convert_contents`**
-
+- **Convert Images to 3DST: 
+- **Get .3DST Image Demensions: `get_3dst_demensions(etc2_path)`**
+- **Get Image Image Demensions: `get_img_demensions(image_path)`**
+- 
 ## Importing the Module(s):
 ### Defualt Importing:
 ```py
