@@ -14,7 +14,7 @@
 - **Download The Updater/Installer [Here](https://github.com/Cracko298/mc3dslib/releases/download/v0.1.0-beta/mc3dslib_updater.py).**
 
 
-# mc3dslib Function(s):
+# mc3dslib Overview:
 
 - **Extract Bytes:    `extract_bytes(filename, arg1, arg2)`**
 - **Convert Bytes:    `convert_bytes(bytestring,order)`**
@@ -49,14 +49,8 @@
 ### Defualt Importing:
 ```py
 import mc3dslib
-```
-```py
 from mc3dslib import BlangFile
-```
-```py
 from mc3dslib import *
-```
-```py
 import mc3dslib as mc3ds
 ```
 
