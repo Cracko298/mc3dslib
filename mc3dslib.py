@@ -10,8 +10,8 @@ class make_mcworld_struct:
         os.makedirs(os.path.join("mcworld_files", "resource_packs"), exist_ok=True)
         os.makedirs(os.path.join("mcworld_files", "behavior_packs"), exist_ok=True)
 
-        open("mcworld_files", "behavior_packs", "#KEEP_FOLDER",'wb+')
-        open("mcworld_files", "resource_packs", "#KEEP_FOLDER",'wb+')
+        open(os.path.join("mcworld_files", "behavior_packs", "#KEEP_FOLDER"), "wb+")
+        open(os.path.join("mcworld_files", "resource_packs", "#KEEP_FOLDER"), "wb+")
 
 class MC3DSBlangException(Exception):
     def __init__(self, message):
