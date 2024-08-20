@@ -751,7 +751,7 @@ def convert_save(folder_path, world_icon_path=None):
     if toast0 == True and toast1 == True:
         print("Valid Path Recieved.")
     else:
-        return f"Path Recieved is Not Valid 3DS World Save.\n\nPath Provied: '{folder_path}'."
+        return f"Path Recieved is Not Valid 3DS World Save.\n\nPath Provided: '{folder_path}'."
 
     console2bedrock_cdb(os.path.join(folder_path, "db", "cdb"))
     console2bedrock_vdb(os.path.join(folder_path, "db", "vdb"))
