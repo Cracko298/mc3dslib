@@ -5,13 +5,13 @@ from PIL import Image
 class make_mcworld_struct:
     # Cracko298
     def make_dirs(self):
-        os.makedirs(".\\mcworld_files", exist_ok=True)
-        os.makedirs(".\\mcworld_files\\db", exist_ok=True)
-        os.makedirs(".\\mcworld_files\\resource_packs", exist_ok=True)
-        os.makedirs(".\\mcworld_files\\behavior_packs", exist_ok=True)
+        os.makedirs("mcworld_files", exist_ok=True)
+        os.makedirs(os.path.join("mcworld_files", "db"), exist_ok=True)
+        os.makedirs(os.path.join("mcworld_files", "resource_packs"), exist_ok=True)
+        os.makedirs(os.path.join("mcworld_files", "behavior_packs"), exist_ok=True)
 
-        open(".\\mcworld_files\\behavior_packs\\#KEEP_FOLDER",'wb+')
-        open(".\\mcworld_files\\resource_packs\\#KEEP_FOLDER",'wb+')
+        open("mcworld_files", "behavior_packs", "#KEEP_FOLDER",'wb+')
+        open("mcworld_files", "resource_packs", "#KEEP_FOLDER",'wb+')
 
 class MC3DSBlangException(Exception):
     def __init__(self, message):
@@ -21,7 +21,7 @@ class BlangFile:
     # STBUniverse (STBrian)
     def __init__(self):
         return
-    
+
     def open(self, path: str = None):
         if path == None:
             raise MC3DSBlangException("path is empty")
@@ -70,7 +70,7 @@ class BlangFile:
         self.data = data
         self.texts = texts
         return self
-    
+
     def getData(self):
         return self.data
 
@@ -89,7 +89,7 @@ class BlangFile:
             else:
                 self.texts[self.texts.index(text)] = " "
         return
-    
+
     def export(self, path: str):
         if type(path) != str:
             raise MC3DSBlangException("path must be a 'str'")
@@ -105,7 +105,7 @@ class BlangFile:
 
             # Posición de texto
             indexData.extend(list(len(textData).to_bytes(4, "little")))
-            
+
             # Agregar texto
             textData.extend(list(self.texts[i].encode("utf-8")))
 
@@ -138,16 +138,16 @@ class BlangFile:
             identifier = bytearray(identifier)
             identifier = int.from_bytes(identifier, "little")
             identifier = str(identifier)
-            
+
             dataDictionary[identifier] = {}
             dataDictionary[identifier]["order"] = i + 1
             dataDictionary[identifier]["text"] = self.texts[i]
-        
+
         outFile = open(os.path.join(path, f"{self.filename}.json"), "w", encoding="utf-8")
         json.dump(dataDictionary, outFile, indent=4, ensure_ascii=False)
         outFile.close()
         return
-    
+
     def fromJson(self, path: str):
         if type(path) != str:
             raise MC3DSBlangException("path must be a 'str'")
@@ -175,12 +175,12 @@ class BlangFile:
 
 def extract_bytes(filename, arg1, arg2):
     # Cracko298
-    with open(filename, 'rb+') as file:
+    with open(filename, "rb+") as file:
         try:
             file.seek(arg1)
             extracted_bytes = file.read(arg2 - arg1)
             return extracted_bytes
-        
+
         except Exception as e:
             return f"Error extracting bytes: {e}"
 
@@ -213,16 +213,16 @@ def extract_colors(image_path):
             existing_colors = {line.strip() for line in existing_file}
     except FileNotFoundError:
         pass
-    
+
     with open(image_path, "rb") as image_file:
         image_file.seek(0x20)
         argb_data = image_file.read()
-        
+
         rgb_hex_values = []
         for i in range(0, len(argb_data), 4):
             b, g, r, _ = argb_data[i:i+4]
             rgb_hex = "#{:02X}{:02X}{:02X}".format(r, g, b)
-            
+
             if rgb_hex not in existing_colors:
                 existing_colors.add(rgb_hex)
                 rgb_hex_values.append(rgb_hex)
@@ -241,7 +241,7 @@ def green_filter(rgb_bytes):
 
     if blue >= 0x10:
         blue -= 0x10
-    
+
     green = 0xB0
 
     green_filtered_rgb = bytearray([red, green, blue])
@@ -249,7 +249,7 @@ def green_filter(rgb_bytes):
 
 def greenify(image_path):
     # Cracko298
-    with open(image_path, 'rb+') as file:
+    with open(image_path, "rb+") as file:
         while True:
             offset = file.tell()
             byte = file.read(1)
@@ -263,7 +263,7 @@ def greenify(image_path):
                     green_filtered_rgb = green_filter(rgb_bytes)
                     file.seek(-3, 1)
                     file.write(green_filtered_rgb)
-    
+
     return f"Set Green Hue To: '{image_path}'."
 
 def invert_color(rgb_bytes):
@@ -272,7 +272,7 @@ def invert_color(rgb_bytes):
 
 def invertclrs(image_path):
     # Cracko298
-    with open(image_path, 'rb+') as file:
+    with open(image_path, "rb+") as file:
         while True:
             offset = file.tell()
             byte = file.read(1)
@@ -286,7 +286,7 @@ def invertclrs(image_path):
                     inverted_rgb = invert_color(rgb_bytes)
                     file.seek(-3, 1)
                     file.write(inverted_rgb)
-    
+
     return f"Inverted Color of: '{image_path}'."
 
 def red_filter(rgb_bytes):
@@ -307,7 +307,7 @@ def red_filter(rgb_bytes):
 
 def redify(image_path):
     # Cracko298
-    with open(image_path, 'rb+') as file:
+    with open(image_path, "rb+") as file:
         while True:
             offset = file.tell()
             byte = file.read(1)
@@ -321,7 +321,7 @@ def redify(image_path):
                     red_filter_bytes = red_filter(rgb_bytes)
                     file.seek(-3, 1)
                     file.write(red_filter_bytes)
-    
+
     print(f"Set Red Hue To: '{image_path}'.")
 
 def orange_filter(rgb_bytes):
@@ -338,7 +338,7 @@ def orange_filter(rgb_bytes):
 
 def orangify(image_path):
     # Cracko298
-    with open(image_path, 'rb+') as file:
+    with open(image_path, "rb+") as file:
         while True:
             offset = file.tell()
             byte = file.read(1)
@@ -352,7 +352,7 @@ def orangify(image_path):
                     orange_filter_rgb = orange_filter(rgb_bytes)
                     file.seek(-3, 1)
                     file.write(orange_filter_rgb)
-    
+
     print(f"Set Orange/Yellow Hue To: '{image_path}'.")
 
 def blue_filter(rgb_bytes):
@@ -369,7 +369,7 @@ def blue_filter(rgb_bytes):
 
 def bluify(image_path):
     # Cracko298
-    with open(image_path, 'rb+') as file:
+    with open(image_path, "rb+") as file:
         while True:
             offset = file.tell()
             byte = file.read(1)
@@ -383,7 +383,7 @@ def bluify(image_path):
                     blue_filter_rgb = blue_filter(rgb_bytes)
                     file.seek(-3, 1)
                     file.write(blue_filter_rgb)
-    
+
     print(f"Set Blue Hue To: '{image_path}'.")
 
 
@@ -391,7 +391,7 @@ def meta_grab(image_path):
     # Cracko298
     tempdata = image_path.replace('.3dst','')
     output_path = f"{tempdata}_metadata.txt"
-    with open(image_path, 'rb') as f, open(output_path, 'a') as of:
+    with open(image_path, "rb") as f, open(output_path, 'a') as of:
         data0 = f.read(0x4)
         f.seek(0x4)
         data1 = f.read(0x01)
@@ -453,8 +453,8 @@ def mat2json(file_path):
     parts = filename.split('.')
     out_file = '.'.join(parts[:-1]) + ".json"
 
-    with open(file_path, 'rb+') as f:
-        with open(out_file, 'wb') as o:
+    with open(file_path, "rb+") as f:
+        with open(out_file, "wb") as o:
             dats = f.read()
             data = dats[::-1]
             writable_d = data[::-1]
@@ -464,13 +464,13 @@ def mat2json(file_path):
 def convert_options(file_path,output_file_path):
     # Cracko298 and Wolfyxon
     target_bytes = bytes([0xD8, 0x05, 0x20, 0x20, 0x6D, 0x70])
-    with open(file_path, 'rb') as file:
+    with open(file_path, "rb") as file:
         content = file.read()
 
         if content.startswith(target_bytes):
             modified_content = content.replace(b'\x20', b'\x00')
 
-            with open(output_file_path, 'wb') as modified_file:
+            with open(output_file_path, "wb") as modified_file:
                 modified_file.write(modified_content)
             print("Modification successful.")
         else:
@@ -487,7 +487,7 @@ def reverse_three_bytes(data):
 
 def create_r3dst(image_path):
     with open(f"{image_path}_converted.r3dst",'wb+') as f:
-        with open(image_path, 'rb') as file:
+        with open(image_path, "rb") as file:
             file.seek(0x20, 1)
             for i in range(0x01, 0x4001):
                 data = file.read(0x04)
@@ -499,7 +499,7 @@ def create_r3dst(image_path):
 
 def extract_head(image_path, output_path):
     offset = 0x20
-    with open(image_path,'rb') as f, open(output_path, 'wb+') as outpf:
+    with open(image_path,"rb") as f, open(output_path, 'wb+') as outpf:
         header = f.read(offset)
         f.seek(0x3020)
         data = f.read(0x4020-0x3020)
@@ -512,13 +512,13 @@ def extract_head(image_path, output_path):
 def revert_options(file_path,output_file_path):
     # Cracko298 and Wolfyxon
     target_bytes = bytes([0xD8, 0x05, 0x00, 0x00, 0x6D, 0x70])
-    with open(file_path, 'rb') as file:
+    with open(file_path, "rb") as file:
         content = file.read()
 
         if content.startswith(target_bytes):
             modified_content = content.replace(b'\x00', b'\x20')
 
-            with open(output_file_path, 'wb') as modified_file:
+            with open(output_file_path, "wb") as modified_file:
                 modified_file.write(modified_content)
             print("Modification successful.")
         else:
@@ -531,11 +531,11 @@ def image_convert(image_path):
         total_size = 0x4000
         offset = 0x20
 
-        with open(img, 'rb') as f:
+        with open(img, "rb") as f:
             header = f.read(offset)
 
             for i in range(1, total_size // block_size + 1):
-                with open(f".\\out\\out_{i}.3dst", 'wb') as o:
+                with open(os.path.join("out", f"out_{i}.3dst"), "wb") as o:
                     o.write(header)
                     blocks = f.read(block_size)
                     o.write(blocks)
@@ -544,7 +544,7 @@ def image_convert(image_path):
         block_size = 0x100
         total_size = 0x4000
         for i in range(1, total_size // block_size + 1):
-            with open(f".\\out\\out_{i}.3dst", "rb+") as f:
+            with open("out", f"out_{i}.3dst", "rb+") as f:
                 f.seek(start_offset)
                 one = f.read(0x08)
                 f.seek(start_offset + 0x10)
@@ -554,7 +554,7 @@ def image_convert(image_path):
                 f.seek(start_offset + 0x50)
                 four = f.read(0x08)
 
-                with open(f'.\\out\\lines\\{output_folder}_out_{i}.3dst', 'wb+') as o:
+                with open("out", "lines", f"{output_folder}_out_{i}.3dst", "wb+") as o:
                     o.write(one)
                     o.write(two)
                     o.write(three)
@@ -579,9 +579,9 @@ def image_convert(image_path):
                         output_file.write(input_file.read())
 
 
-    os.makedirs('.\\out', exist_ok=True)
-    os.makedirs('.\\out\\lines', exist_ok=True)
-    os.makedirs('.\\out\\compiled_lines', exist_ok=True)
+    os.makedirs("out", exist_ok=True)
+    os.makedirs(os.path.join("out", "lines"), exist_ok=True)
+    os.makedirs(os.path.join("out", "compiled_lines"), exist_ok=True)
 
     extract_blocks(image_path)
     extract_lines(0x20, "1")
@@ -592,13 +592,13 @@ def image_convert(image_path):
     extract_lines(0xA8, "6")
     extract_lines(0xC0, "7")
     extract_lines(0xC8, "8")
-    sort_and_concatenate_binary_files('.\\out\\lines','.\\out\\compiled_lines')
+    sort_and_concatenate_binary_files(os.path.join("out", "lines"), os.path.join("out", "compiled_lines"))
 
 def copy_lines(filename, line_number, mode=1):
     # YT-Toaster
     line_number -= 1
     try:
-        with open(filename, 'rb') as file:
+        with open(filename, "rb") as file:
             lines = file.readlines()
 
             if 0 <= line_number < len(lines):
@@ -614,7 +614,7 @@ def copy_lines(filename, line_number, mode=1):
                     return f"SHA256 Hash of Line {line_number + 1}: {hash_value}"
 
                 new_filename = f"{filename}_copied.bin"
-                with open(new_filename, 'wb') as new_file:
+                with open(new_filename, "wb") as new_file:
                     for line_to_copy in lines_to_copy:
                         new_file.write(line_to_copy)
 
@@ -646,12 +646,12 @@ def console2bedrock_cdb(folder_path, truncate_offset=0x84):
         max_file = max(filtered_files, key=lambda x: x[1])
         max_file_name, max_file_number = max_file
 
-        with open(os.path.join(folder_path, max_file_name), 'rb+') as file:
+        with open(os.path.join(folder_path, max_file_name), "rb+") as file:
             file_content = file.read()
             file.seek(truncate_offset)
             truncated_content = file.read()
 
-            with open(os.path.join(".\\mcworld_files\\db", output_file_name), 'wb') as new_file:
+            with open(os.path.join("mcworld_files", "db", output_file_name), "wb") as new_file:
                 new_file.write(truncated_content)
 
         return f"Converted most Recent Slot to: '{output_file_name}'."
@@ -682,12 +682,12 @@ def console2bedrock_vdb(folder_path):
         max_file = max(filtered_files, key=lambda x: x[1])
         max_file_name, max_file_number = max_file
 
-        with open(os.path.join(folder_path, max_file_name), 'rb') as file:
+        with open(os.path.join(folder_path, max_file_name), "rb") as file:
             content_at_offset = file.read()
             file.seek(offset)
             check_file = file.read(0x01)
-        
-            with open(os.path.join(".\\mcworld_files\\db", output_file_name), 'wb') as new_file:
+
+            with open(os.path.join("mcworld_files", "db", output_file_name), "wb") as new_file:
                 new_file.write(content_at_offset)
 
         return f"Converted most recent VDB file to: '{output_file_name}'."
@@ -702,29 +702,29 @@ def console2bedrock_meta(level_dat=0, level_dat_old=0, levelname_txt=0, world_ic
     if world_icon == None:
         checksum += 0x7A
 
-    shutil.copy2(level_dat, ".\\mcworld_files")
-    shutil.copy2(level_dat_old, ".\\mcworld_files")
-    shutil.copy2(levelname_txt, ".\\mcworld_files")
+    shutil.copy2(level_dat, "mcworld_files")
+    shutil.copy2(level_dat_old, "mcworld_files")
+    shutil.copy2(levelname_txt, "mcworld_files")
 
     if checksum >= 0x50:
         pass
     else:
-        shutil.copy2(world_icon, ".\\mcworld_files")
+        shutil.copy2(world_icon, "mcworld_files")
 
 def convert_lockage(file_path):
     # Cracko298
     make_mcworld_struct.make_dirs(make_mcworld_struct)
-    with open(file_path, 'rb+') as f0:
+    with open(file_path, "rb+") as f0:
         lockage_data = f0.read()
-        
-    with open('.\\mcworld_files\\db\\MANIFEST-000001', 'wb+') as f1:
+
+    with open(os.path.join("mcworld_files", "db", "MANIFEST-000001"), "wb+") as f1:
         f1.write(lockage_data)
-    
-    with open('.\\mcworld_files\\db\\CURRENT', 'w+') as f2:
+
+    with open("mcworld_files", "db", "CURRENT", "w+") as f2:
         f2.write("MANIFEST-000001")
-    
-    f3 = open(".\\mcworld_files\\db\\LOCK", 'wb+')
-    f4 = open(".\\mcworld_files\\db\\LOG", 'wb+')
+
+    f3 = open("mcworld_files", "db", "LOCK", "wb+")
+    f4 = open("mcworld_files", "db", "LOG", "wb+")
     f3.close()
     f4.close()
 
@@ -732,12 +732,12 @@ def zip_convert_contents(folder_path):
     # Cracko298
     zip_name = os.path.basename(folder_path)
 
-    with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for root, dirs, files in os.walk(".\\mcworld_files"):
+    with zipfile.ZipFile(zip_name, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk("mcworld_files"):
             for file in files:
-                zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), ".\\mcworld_files"))
+                zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), "mcworld_files"))
 
-    zip_name = zip_name.replace('.zip','')
+    zip_name = zip_name.replace(".zip", "")
 
     os.rename(zip_name, f"{zip_name}_Converted.mcworld")
 
@@ -745,16 +745,16 @@ def convert_save(folder_path, world_icon_path=None):
     # YT-Toaster & Cracko298
     make_mcworld_struct.make_dirs(make_mcworld_struct)
 
-    toast0 = os.path.exists(f"{folder_path}\\db\\vdb")
-    toast1 = os.path.exists(f"{folder_path}\\db\\cdb")
+    toast0 = os.path.exists(os.path.join(folder_path, "db", "vdb"))
+    toast1 = os.path.exists(os.path.join(folder_path, "db", "cdb"))
 
     if toast0 == True and toast1 == True:
         print("Valid Path Recieved.")
     else:
         return f"Path Recieved is Not Valid 3DS World Save.\n\nPath Provied: '{folder_path}'."
-    
-    console2bedrock_cdb(f"{folder_path}\\db\\cdb")
-    console2bedrock_vdb(f"{folder_path}\\db\\vdb")
+
+    console2bedrock_cdb(os.path.join(folder_path, "db", "cdb"))
+    console2bedrock_vdb(os.path.join(folder_path, "db", "vdb"))
 
     chk0, chk1, chk2 = (".png", ".jpeg", ".jpg")
 
@@ -764,47 +764,38 @@ def convert_save(folder_path, world_icon_path=None):
         png_check = False
 
     if world_icon_path == None:
-        console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt")
+        console2bedrock_meta(os.path.join(folder_path, "level.dat"), os.path.join(folder_path, "level.dat_old"), os.path.join(folder_path, "levelname.txt"))
     elif world_icon_path and png_check == True:
-        console2bedrock_meta(f"{folder_path}\\level.dat", f"{folder_path}\\level.dat_old", f"{folder_path}\\levelname.txt", world_icon_path)
+        console2bedrock_meta(os.path.join(folder_path, "level.dat"), os.path.join(folder_path, "level.dat_old"), os.path.join(folder_path, "levelname.txt"), world_icon_path)
 
-    convert_lockage(f"{folder_path}\\db\\vdb\\newindex.vdb")
+    convert_lockage(os.path.join(folder_path, "db", "vdb", "newindex.vdb"))
     zip_convert_contents(folder_path)
 
-def get_png_demesions(png_path=str):
-    if '\\' in png_path:
-        png_path.replace('\\','/')
-
+def get_png_demesions(png_path: str):
     with Image.open(png_path) as image:
         width,height = image.size
         return width, height
 
-def get_3dst_demensions(etc2_path=str):
-    if '\\' in etc2_path:
-        etc2_path.replace('\\','/')
-        
-    with open(etc2_path,'rb+') as of:
+def get_3dst_demensions(etc2_path: str):
+    with open(etc2_path,"rb+") as of:
         of.seek(0x0C)
         width_b = of.read(0x04)
         of.seek(0x10)
         height_b = of.read(0x04)
-    
+
         width = int.from_bytes(width_b, byteorder='little')
         height = int.from_bytes(height_b, byteorder='little')
         of.close()
         return width, height
 
-def convert_2_img(etc2_file_path=str,show_flag=False):
-    if '\\' in etc2_file_path:
-        etc2_file_path.replace('\\','/')
-
+def convert_2_img(etc2_file_path: str,show_flag=False):
     outname = os.path.basename(etc2_file_path)
     extension = os.path.splitext(etc2_file_path)[1]
     outname = outname.replace(extension,'.png')
 
     width, height = get_3dst_demensions(etc2_file_path)
 
-    with open(etc2_file_path, 'rb') as f:
+    with open(etc2_file_path, "rb") as f:
         f.seek(0x20)
         etc2_data = f.read()
 
@@ -824,14 +815,11 @@ def convert_2_img(etc2_file_path=str,show_flag=False):
 
     if show_flag == True:
         image.show()
-    
+
     image.save(outname)
     return image
 
-def convert_2_etc2(png_file_path=str):
-    if '\\' in png_file_path:
-        png_file_path.replace('\\','/')
-
+def convert_2_etc2(png_file_path: str):
     outname = os.path.basename(png_file_path)
     extension = os.path.splitext(png_file_path)[1]
     outname = outname.replace(extension,'.3dst')
@@ -843,7 +831,7 @@ def convert_2_etc2(png_file_path=str):
     with Image.open(png_file_path) as image:
         if image.mode != 'RGBA':
             image = image.convert('RGBA')
-        
+
         width, height = image.size
         etc2_data = bytearray()
         for y in range(0, height, 8):
@@ -860,5 +848,5 @@ def convert_2_etc2(png_file_path=str):
         with open(outname,'wb+') as f:
             f.write(b'3DST\x03\x00\x00\x00\x00\x00\x00\x00'),f.write(w),f.write(h),f.write(w),f.write(h),f.write(b'\x01\x00\x00\x00')
             f.write(etc2_data)
-        
+
         return bytes(etc2_data)
