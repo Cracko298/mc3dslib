@@ -10,7 +10,7 @@ def download_latest_release(repo_owner, repo_name, file_name, save_path):
     release_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
     response = requests.get(release_url)
     release_info = response.json()
-    print("\nGetting Latest mc3dslib Version...")
+    print("Getting Latest mc3dslib Version...")
 
     for asset in release_info['assets']:
         if asset['name'] == file_name:
