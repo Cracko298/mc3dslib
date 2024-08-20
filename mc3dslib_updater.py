@@ -35,19 +35,19 @@ if __name__ == "__main__":
     if python_install_dir == None:
         exit(1)
 
-    mc3ds_install_dir = f"{python_install_dir}\\Lib\\site-packages\\mc3dslib"
-    chk0 = os.path.exists(f"{mc3ds_install_dir}\\__init__.py")
+    mc3ds_install_dir = os.path.join(python_install_dir, "lib", "site-packages", "mc3dslib")
+    chk0 = os.path.exists(os.path.join(mc3ds_install_dir, "__init__.py"))
 
     if chk0 == True:
-        os.remove(f"{mc3ds_install_dir}\\__init__.py")
+        os.remove(mc3ds_install_dir, "__init__.py")
 
     os.makedirs(mc3ds_install_dir, exist_ok=True)
 
-    download_latest_release("Cracko298","mc3dslib","mc3dslib.py",f"{mc3ds_install_dir}\\__init__.py")
+    download_latest_release("Cracko298","mc3dslib","mc3dslib.py",os.path.join(mc3ds_install_dir,"__init__.py"))
 
     if chk0 == True:
         print("\nUpdated mc3dslib Successfully.")
     else:
         print("\nInstalled mc3dslib Successfully.")
-    
+
     sleep(5)
