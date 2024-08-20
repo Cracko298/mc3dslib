@@ -486,7 +486,7 @@ def reverse_three_bytes(data):
     return reversed_three_bytes
 
 def create_r3dst(image_path):
-    with open(f"{image_path}_converted.r3dst",'wb+') as f:
+    with open(f"{image_path}_converted.r3dst", "wb+") as f:
         with open(image_path, "rb") as file:
             file.seek(0x20, 1)
             for i in range(0x01, 0x4001):
@@ -499,7 +499,7 @@ def create_r3dst(image_path):
 
 def extract_head(image_path, output_path):
     offset = 0x20
-    with open(image_path,"rb") as f, open(output_path, 'wb+') as outpf:
+    with open(image_path, "rb") as f, open(output_path, "wb+") as outpf:
         header = f.read(offset)
         f.seek(0x3020)
         data = f.read(0x4020-0x3020)
@@ -554,7 +554,7 @@ def image_convert(image_path):
                 f.seek(start_offset + 0x50)
                 four = f.read(0x08)
 
-                with open("out", "lines", f"{output_folder}_out_{i}.3dst", "wb+") as o:
+                with open(os.path.join("out", "lines", f"{output_folder}_out_{i}.3dst"), "wb+") as o:
                     o.write(one)
                     o.write(two)
                     o.write(three)
@@ -777,7 +777,7 @@ def get_png_demesions(png_path: str):
         return width, height
 
 def get_3dst_demensions(etc2_path: str):
-    with open(etc2_path,"rb+") as of:
+    with open(etc2_path, "rb+") as of:
         of.seek(0x0C)
         width_b = of.read(0x04)
         of.seek(0x10)
@@ -845,7 +845,7 @@ def convert_2_etc2(png_file_path: str):
 
                 etc2_data += block_data
 
-        with open(outname,'wb+') as f:
+        with open(outname, "wb+") as f:
             f.write(b'3DST\x03\x00\x00\x00\x00\x00\x00\x00'),f.write(w),f.write(h),f.write(w),f.write(h),f.write(b'\x01\x00\x00\x00')
             f.write(etc2_data)
 
