@@ -22,7 +22,7 @@ def download_latest_release(repo_owner, repo_name, file_name, save_path):
 
     response = requests.get(asset_url)
     print("Downloading Library...")
-    with open(save_path, 'wb') as f:
+    with open(save_path, "wb") as f:
         f.write(response.content)
 
 if __name__ == "__main__":
