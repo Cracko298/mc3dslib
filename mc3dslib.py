@@ -721,7 +721,7 @@ def convert_lockage(file_path):
         f1.write(lockage_data)
 
     with open(os.path.join("mcworld_files", "db", "CURRENT"), "w+") as f2:
-        f2.write("MANIFEST-000001")
+        f2.write("MANIFEST-000001\n")
 
     f3 = open(os.path.join("mcworld_files", "db", "LOCK"), "wb+")
     f4 = open(os.path.join("mcworld_files", "db", "LOG"), "wb+")
