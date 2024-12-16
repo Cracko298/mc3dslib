@@ -1,3 +1,6 @@
+## Development for mc3dslib has ceased.
+### Please try [mc3dslib2]() for modification to files and other things.
+
 # mc3dslib
 - **A python Library for Minecraft 3DS, allowing for easy Modification of the SaveGames, and romfs Files.**
 - **An online installer/Updater was just released alongside version <ins>v0.1.0-beta</ins>🎉.**
